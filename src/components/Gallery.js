@@ -10,7 +10,7 @@ const Gallery = () => {
 
   return (
     <>
-      <h1>Product Gallery</h1>
+      <h1>E commerce Product Gallery</h1>
       <div id="gallery"></div>
     </>
   );

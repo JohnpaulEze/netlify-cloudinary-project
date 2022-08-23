@@ -3,7 +3,7 @@ import { Button, Card, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { upload } from "../cloudinary/cloudinaryHelper";
-// import { defaultUploadTag } from "../cloudinary/cloudinaryConfig";
+import { defaultUploadTag } from "../cloudinary/cloudinaryConfig";
 import { useContext } from "react";
 import GalleryContext from "../context/GalleryContext";
 
@@ -30,8 +30,8 @@ const MediaUpload = () => {
               message.success("Images uploaded successfully");
               myGallery.update({
                 mediaAssets: [
-                  { tag: "cloudinary_interactive_gallery" },
-                  { tag: "cloudinary_interactive_gallery", mediaType: "video" }
+                  { tag: defaultUploadTag },
+                  //{ tag: "cloudinary_interactive_gallery", mediaType: "video" }
                 ]
               });
               setIsUploading(false);
@@ -59,13 +59,13 @@ const MediaUpload = () => {
     },
     showUploadList: true
   };
-
+  
   return (
     <Card
       style={{ margin: "auto", width: "50%" }}
       actions={[
         <Button type="primary" loading={isUploading} onClick={uploadSelection}>
-          Submit
+          Upload
         </Button>
       ]}
     >
@@ -73,7 +73,7 @@ const MediaUpload = () => {
         <p className="ant-upload-drag-icon">
           <UploadOutlined />
         </p>
-        <p className="ant-upload-text">Click to Upload Files</p>
+        <p className="ant-upload-text">Click to Select Files</p>
       </Upload.Dragger>
     </Card>
   );
