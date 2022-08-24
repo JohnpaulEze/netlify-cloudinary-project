@@ -3,7 +3,7 @@ import { Button, Card, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { upload } from "../cloudinary/cloudinaryHelper";
-import { defaultUploadTag } from "../cloudinary/cloudinaryConfig";
+//import { defaultUploadTag } from "../cloudinary/cloudinaryConfig";
 import { useContext } from "react";
 import GalleryContext from "../context/GalleryContext";
 
@@ -30,7 +30,7 @@ const MediaUpload = () => {
               message.success("Images uploaded successfully");
               myGallery.update({
                 mediaAssets: [
-                  { tag: defaultUploadTag },
+                  { tag: 'product_gallery_tags' },
                   //{ tag: "cloudinary_interactive_gallery", mediaType: "video" }
                 ]
               });

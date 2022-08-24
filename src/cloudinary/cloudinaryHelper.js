@@ -7,7 +7,7 @@ export const upload = async({ file, fileType, successCallback }) => {
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", "demopreset");
-  data.append("tags", "cloudinary_interactive_gallery");
+  data.append("tags", "product_gallery_tags");
 
   const res = await axios
     .post(url, data, {
@@ -21,18 +21,5 @@ export const upload = async({ file, fileType, successCallback }) => {
     console.log(res.data)
 
     successCallback(res.data)
-
-/*   const url = `https://api.cloudinary.com/v1_1/johnpaul/${fileType}/upload`;
-  const data = new FormData();
-  data.append("file", file);
-  data.append("upload_preset", "testpreset");
-  data.append("tags", "cloudinary_interactive_gallery");
-
-  axios
-    .post(url, data, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    })
-    .then((response) => successCallback(response.data)); */
+    
 };

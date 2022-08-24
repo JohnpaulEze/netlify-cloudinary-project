@@ -11,8 +11,7 @@ const myGallery = cloudinary.galleryWidget({
   container: "#gallery",
   cloudName: "johnpaul",
   mediaAssets: [
-    { tag: "cloudinary_interactive_gallery", mediaType: "image" }, // by default mediaType: "image"
-    // { tag: "cloudinary_interactive_gallery", mediaType: "video" }
+    { tag: "product_gallery_tags", mediaType: "image" }, // by default mediaType: "image"
   ]
 });
 
