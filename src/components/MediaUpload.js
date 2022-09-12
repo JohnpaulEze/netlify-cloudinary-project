@@ -3,13 +3,16 @@ import { Button, Card, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { upload } from "../cloudinary/cloudinaryHelper";
-//import { defaultUploadTag } from "../cloudinary/cloudinaryConfig";
 import { useContext } from "react";
 import GalleryContext from "../context/GalleryContext";
 
 const MediaUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [userInput, setUserInput] = useState({
+    tag: '',
+    productName: ''
+  })
 
   const navigate = useNavigate();
 
@@ -25,13 +28,13 @@ const MediaUpload = () => {
         upload({
           file,
           fileType,
-          successCallback: () => {
+          userInput,
+          successCallback: (response) => {
             if (index === selectedFiles.length - 1) {
               message.success("Images uploaded successfully");
               myGallery.update({
                 mediaAssets: [
-                  { tag: 'product_gallery_tags' },
-                  //{ tag: "cloudinary_interactive_gallery", mediaType: "video" }
+                  { tag: userInput.tag },
                 ]
               });
               setIsUploading(false);
@@ -42,6 +45,16 @@ const MediaUpload = () => {
       });
     }
   };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setUserInput({
+      ...userInput,
+      [e.target.name]: value
+    });
+    
+    // setUserTag(e.target.value)
+  }
 
   const props = {
     multiple: true,
@@ -75,6 +88,8 @@ const MediaUpload = () => {
         </p>
         <p className="ant-upload-text">Click to Select Files</p>
       </Upload.Dragger>
+      <input name="tag" type='text' onChange={handleChange} value={userInput.tag} placeholder='Enter a Tag' />
+      <input name="productName" type="text" onChange={handleChange} value={userInput.productName} placeholder='Enter Product Name' />
     </Card>
   );
 };

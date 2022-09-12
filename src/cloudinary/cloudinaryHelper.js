@@ -1,13 +1,14 @@
 import axios from "axios";
-// import { cloudName, defaultUploadTag, uploadPreset } from "./cloudinaryConfig";
 
-export const upload = async({ file, fileType, successCallback }) => {
+export const upload = async({ file, fileType, userInput, successCallback }) => {
 
+  const {tag, productName} = userInput
   const url = 'http://localhost:8888/.netlify/functions/cloudinary';
   const data = new FormData();
   data.append("file", file);
-  data.append("upload_preset", "demopreset");
-  data.append("tags", "product_gallery_tags");
+  data.append("upload_preset", "demo_preset");
+  data.append("tags", tag);
+  data.append("productName", productName);
 
   const res = await axios
     .post(url, data, {
