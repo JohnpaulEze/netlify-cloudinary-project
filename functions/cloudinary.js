@@ -7,32 +7,25 @@ const handler = async(event) => {
 
     try {
         Cloudinary.config({
-            cloud_name: 'johnpaul',
-            REACT_APP_UPLOAD_PRESET: 'demopreset',
+            cloud_name: 'johnpaulopera',
             api_key: process.env.API_KEY,
             api_secret: process.env.API_SECRET
         })
 
-        let image = ''
+        const uploadData = await MultipartParser.parse(event)
+        const b64 = uploadData.files[0].content.toString('base64');
+        const mimeType = uploadData.files[0].contentType; 
 
-        MultipartParser.parse(event).then(async formData => {
-            const imgName = Path.parse(formData.files[0].filename).name
-            const b64 = formData.files[0].content.toString('base64');
-            const mimeType = formData.files[0].contentType; 
+        const img = await Cloudinary.uploader.upload(`data:${mimeType};base64,${b64}`, {
+            public_id: `gallery/${uploadData.productName}`,
+            tags: `${uploadData.tags}`, 
+            upload_preset: `${uploadData.upload_preset}`
 
-            const img = await Cloudinary.uploader.upload(`data:${mimeType};base64,${b64}`, {
-                public_id: `gallery/${imgName}`,
-                tags: `${formData.tags}`, 
-                upload_preset: `${formData.upload_preset}`
-
-               })
-
-               image += img
         })
         return {
             statusCode: 200,
             body: JSON.stringify({
-                data: image
+                image: img 
             })
            }
     } catch (error) {
